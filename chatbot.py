@@ -1,14 +1,17 @@
-import io      
 import random
 import string # to process standard python strings 
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
 import warnings
 warnings.filterwarnings('ignore')
+
 import nltk
 nltk.download('popular', quiet=True)
-f=open('data (1).txt','r',errors = 'ignore')
+
+file_ = input("Please Enter File Name: ")
+
+f = open(file_,'r',errors = 'ignore')
 data = f.read()
 data = data.lower()
 sent_tokens = nltk.sent_tokenize(data)
@@ -30,7 +33,7 @@ def greeting(sentence):
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
             
- def response(user_response):
+def response(user_response):
     robo_response=''
     sent_tokens.append(user_response)
     TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
@@ -46,3 +49,15 @@ def greeting(sentence):
     else:
         robo_response = robo_response+sent_tokens[idx]
         return robo_response
+
+if __name__ == '__main__':
+    
+    try:
+        g = input("Greeting:  ")
+        print(greeting(g))
+        r = input("Write Something....realted to given file\n")
+        print(response(r))
+    
+    except Exception as e:
+        print("Error: ",e)
+    
